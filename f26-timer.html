@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      @font-face {
+        font-family: Avenir LT Std;
+        src: url(FontsFree-Net-AvenirLTStd-Book.ttf);
+      }
+      .timer-left-container {
+        display: flex;
+      }
+      .timer-left-container > div {
+        display: flex;
+      }
+      .timer-box-container {
+        display: inline-block;
+      }
+      .timer-box-container span {
+        background: #eae9e9;
+        width: 69.5px;
+        height: 66.11px;
+        border-radius: 8.475px;
+        color: #3e3e3e;
+        font-weight: 100;
+        text-align: center;
+        font-family: avenir-roman;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 38.985px;
+        margin: auto 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .timer-box-container div {
+        padding-top: 8.5px;
+        font-family: avenir-roman;
+        font-style: normal;
+        font-weight: normal;
+        text-align: center;
+        font-size: 14px;
+        line-height: 24px;
+        color: #343434;
+      }
+      .timer-left-container > div > div:not(:first-child) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 15px;
+        font-family: avenir-roman;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 44.9175px;
+        line-height: 25px;
+        color: #6b6b6b;
+        margin: 0 3px;
+        
+      }
+
+      @media only screen and (max-width: 768px) {
+      .timer-box-container span{
+        width: 50px;
+        height: 45px;
+        font-size: 16px !important;
+      }
+      .timer-box-container div {
+        font-size: 12px;
+        line-height: 18px;
+      }
+      .timer-left-container > div > div:not(:first-child) {
+        font-size: 22px;
+      }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="timer-left-container" id="get-date" set-date="Oct 1, 2021 10:35:35">
+
+      <div>
+        <div class="timer-box-container">
+          <span id="day"></span>
+          <div>Days</div>
+        </div>
+
+        <div>:</div>
+      </div>
+
+      <div>
+        <div class="timer-box-container">
+          <span id="hour"></span>
+          <div>Hours</div>
+        </div>
+
+        <div>:</div>
+      </div>
+
+      <div>
+        <div class="timer-box-container">
+          <span id="minute"></span>
+          <div>Minutes</div>
+        </div>
+
+        <div>:</div>
+      </div>
+
+      <div>
+        <div class="timer-box-container">
+          <span id="second"></span>
+          <div>Seconds</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+
+    <script>
+      var getDate = document.getElementById("get-date");
+      var setDate = getDate.getAttribute("set-date");
+      var setDateToFormatDate = new Date(setDate).getTime();
+      var deadlineDate = setDateToFormatDate;
+
+      var timer = setInterval(function () {
+        var nowDate = new Date().getTime();
+        var timerRun = deadlineDate - nowDate;
+        var days = Math.floor(timerRun / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((timerRun % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((timerRun % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timerRun % (1000 * 60)) / 1000);
+        days = (days < 10) ? "0" + days : days;
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+        document.getElementById("day").innerHTML = days;
+        document.getElementById("hour").innerHTML = hours;
+        document.getElementById("minute").innerHTML = minutes;
+        document.getElementById("second").innerHTML = seconds;
+        if (timerRun < 0) {
+          clearInterval(timer);
+          document.getElementById("day").innerHTML = "00";
+          document.getElementById("hour").innerHTML = "00";
+          document.getElementById("minute").innerHTML = "00";
+          document.getElementById("second").innerHTML = "00";
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>
